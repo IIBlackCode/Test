@@ -1,0 +1,65 @@
+>>> from pybo.models import Question, Answer
+>>> from django.utils import timezone
+>>> q = Question(subject='pybo가 무엇인가요?', content='pybo에 대해서 알고 싶습니다.', create_date=timezone.now())
+>>> q.save()
+>>> q.id
+1
+>>> q = Question(subject='장고 모델 질문입니다.', content='id는 자동으로 생성되나요?.', create_date=timezone.now())   
+>>> q.save()
+>>> q.id
+2
+
+>>> Question.objects.all() 
+<QuerySet [<Question: Question object (1)>, <Question: Question object (2)>]>
+
+>>> from pybo.models import Question, Answer
+>>> Question.objects.all()
+<QuerySet [<Question: Question object (1)>, <Question: Question object (2)>]>
+
+>>> from pybo.models import Question, Answer
+>>> Question.objects.all()
+<QuerySet [<Question: pybo가 무엇인가요?>, <Question: 장고 모델 질문입니다.>]>
+
+
+>>> Question.objects.filter(id = 1) 
+<QuerySet [<Question: pybo가 무엇인가요?>]>
+>>> Question.objects.get(id = 1)
+<Question: pybo가 무엇인가요?>
+
+>>> Question.objects.filter(subject__contains='장고') 
+<QuerySet [<Question: 장고 모델 질문입니다.>]>
+
+>>> q = Question.objects.get(id = 2)   
+>>> q 
+<Question: 장고 모델 질문입니다.>
+>>> q.subject = 'Django Model Question' 
+>>> q.save()
+>>> q
+<Question: Django Model Question>
+
+>>> q = Question.objects.get(id = 1) 
+>>> q.delete()
+(1, {'pybo.Question': 1})
+
+>>> Question.objects.all()
+<QuerySet [<Question: Django Model Question>]>
+
+>>> q = Question.objects.get(id=2)
+>>> q
+<Question: Django Model Question>
+
+>>> from django.utils import timezone
+>>> a = Answer(question = q, content = '네 자동으로 생성됩니다.', create_date=timezone.now())
+>>> a.save()
+
+>>> a.id
+1
+>>> a = Answer.objects.get(id=1)
+>>> a
+<Answer: Answer object (1)>
+
+>>> a.question
+<Question: Django Model Question>
+
+>>> q.answer_set.all()
+<QuerySet [<Answer: Answer object (1)>]>
