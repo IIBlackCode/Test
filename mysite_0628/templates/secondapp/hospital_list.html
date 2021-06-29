@@ -1,0 +1,29 @@
+<style>
+    table, tr, td {
+        border: 1px solid black;
+        border-spacing: 0;
+    }
+    tr:nth-child(1) > td {
+        border-top: 3px solid red;
+    }
+    td:nth-child(1) {
+        border-left: 3px solid red;
+    }
+</style>
+
+<table>
+    <tr>
+        <td>번호</td>
+        <td>시</td>
+        <td>이름</td>
+        <td>과수</td>
+    </tr>
+    {% for h in hospital_list %}
+    <tr>
+        <td>{{ h.id }}</td>
+        <td>{{ h.sido }}</td>
+        <td>{{ h.name }}</td>
+        <td>{{ h.medical }}</td>
+    </tr>
+    {% endfor %}
+</table>
